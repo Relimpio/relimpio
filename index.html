@@ -1,0 +1,696 @@
+<html><head><base href="https://limpiezatotal.com/">
+<title>RELIMPIO - Tu Carrito de Compras</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#4CAF50">
+<link rel="manifest" href="manifest.json">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #f0f8ff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  padding-top: 112.5px;
+  font-size: 20.8px;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 0.4em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 0.875em;
+  margin-top: 0.2em;
+  font-weight: 500;
+}
+
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+h2 {
+  color: #4CAF50;
+  font-size: 1.4em;
+  margin-bottom: 0.8em;
+  font-weight: 500;
+  text-align: left;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  table-layout: fixed;
+}
+
+.cart-table th, .cart-table td {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 5px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.9em;
+  width: 20%; /* Distribución equitativa de las columnas */
+}
+
+.cart-table th:first-child {
+  font-size: 1.17em;
+}
+
+.cart-table th:nth-child(2),
+.cart-table th:nth-child(3),
+.cart-table th:nth-child(4),
+.cart-table th:last-child {
+  font-size: 1.17em;
+}
+
+.cart-table td {
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.cart-table tr {
+  transition: all 0.3s ease;
+}
+
+.cart-table tr:active {
+  background-color: #e8e8e8;
+}
+
+.cart-table td:first-child,
+.cart-table td:nth-child(2),
+.cart-table td:nth-child(3),
+.cart-table td:nth-child(4) {
+  font-size: 1.125em;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-selector button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  width: 37.5px;
+  height: 37.5px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-selector button:active {
+  background-color: #45a049;
+}
+
+.quantity-selector input {
+  width: 30px;
+  text-align: center;
+  font-size: 17.5px;
+  margin: 0 5px;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.quantity-selector input::-webkit-outer-spin-button,
+.quantity-selector input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.remove-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  font-size: 0.8em;
+}
+
+.remove-btn:active {
+  background-color: #ff3333;
+}
+
+.cart-summary {
+  margin-top: 1.5em;
+  text-align: right;
+  font-size: 1em;
+}
+
+.cart-summary h3 {
+  font-size: 1.3em;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 1em;
+  margin-top: 1em;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+
+.btn:active {
+  background-color: #45a049;
+  transform: translateY(2px);
+}
+
+.delivery-option {
+  margin-top: 1.5em;
+  background-color: #f9f9f9;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.delivery-option label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+
+.delivery-details {
+  margin-top: 1em;
+}
+
+.delivery-details input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #4CAF50;
+  border-radius: 4px;
+  font-size: 0.9em;
+  -webkit-appearance: none;
+}
+
+.gps-option {
+  margin-top: 1em;
+}
+
+.gps-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.gps-btn:active {
+  background-color: #45a049;
+}
+
+.gps-btn .emoji {
+  margin-right: 8px;
+}
+
+#gps-status {
+  display: block;
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  width: 100%;
+  font-size: 0.8em;
+}
+
+@media (max-width: 480px) {
+  .cart-table {
+    font-size: 0.8em;
+  }
+
+  .cart-table th, .cart-table td {
+    padding: 8px 2px;
+  }
+
+  .btn, .gps-btn {
+    padding: 12px 20px;
+    font-size: 1em;
+  }
+
+  .quantity-selector button {
+    width: 35px;
+    height: 35px;
+    font-size: 17.5px;
+  }
+
+  .quantity-selector input {
+    width: 25px;
+    font-size: 15px;
+  }
+
+  .remove-btn {
+    padding: 5px 8px;
+    font-size: 0.7em;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  header p {
+    font-size: 0.875em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .delivery-option label {
+    font-size: 0.9em;
+  }
+
+  .delivery-details input {
+    font-size: 0.9em;
+  }
+}
+
+input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delivery-note {
+  font-size: 0.8em;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>🧼 RELIMPIO 🧽</h1>
+  <p>¡Tu tienda de limpieza favorita!</p>
+</header>
+
+<div class="container">
+  <h2>🛒 Tu Carrito de Compras</h2>
+  
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>🧴 Lavandina x 1l</td>
+        <td>$550</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🧼 Detergente x 1l</td>
+        <td>$1000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🧴 Suavizante x 1l</td>
+        <td>$800</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🧼 Jabón líquido x 1l</td>
+        <td>$1000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🌺 Desodorante para piso x 1l</td>
+        <td>$500</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🦟 Insecticida Caotrina x 1l</td>
+        <td>$600</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🦟 Insecticida Sectisol x 1l</td>
+        <td>$700</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🪣 Balde 9l</td>
+        <td>$2000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🛁 Fuentón 14l</td>
+        <td>$27000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🛁 Palangana 9l</td>
+        <td>$2000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🧽 Trapo rejilla 40x42 cm</td>
+        <td>$500</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+      <tr>
+        <td>🧹 Escoba de paja</td>
+        <td>$3000</td>
+        <td>
+          <div class="quantity-selector">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <input type="number" value="0" min="0" max="10" onchange="updateSubtotal(this)">
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+        </td>
+        <td class="subtotal">$0.00</td>
+        <td><button class="remove-btn" onclick="removeItem(this)">Quitar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="delivery-option">
+    <h3>🚚 Opciones de Entrega</h3>
+    <label>
+      <input type="radio" name="delivery" value="store" checked="" onchange="toggleDeliveryDetails()"> 🏪 Retirar de la tienda (Gobernador Bosch 980)
+    </label>
+    <label>
+      <input type="radio" name="delivery" value="home" onchange="toggleDeliveryDetails()"> 🏠 Envío a domicilio (solo en Resistencia)
+    </label>
+    <p class="delivery-note">📅 Los envíos se realizan los días Lunes y Martes en el horario de 8:30 a 12:30hs</p>
+    <div id="delivery-details" class="delivery-details" style="display:none;">
+      <input type="text" id="nombre" placeholder="Tu nombre completo">
+      <input type="text" id="direccion" placeholder="Dirección de entrega">
+      <div class="gps-option">
+        <button id="gps-btn" class="gps-btn" onclick="getGPSLocation()">
+          <span class="emoji">📍</span> Enviar mi ubicación GPS
+        </button>
+        <span id="gps-status"></span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cart-summary">
+    <h3>💰 Total: <span id="cart-total">$0.00</span></h3>
+    <button onclick="enviarPedidoWhatsApp()" class="btn">📲 Enviar pedido por WhatsApp</button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2023 RELIMPIO. 🧼 ¡Limpiando con una sonrisa! 😊</p>
+</footer>
+
+<script>
+let gpsLink = null;
+
+function updateQuantity(button, change) {
+  let input = button.parentNode.querySelector('input');
+  let newValue = parseInt(input.value) + change;
+  if (newValue >= 0 && newValue <= 10) {
+    input.value = newValue;
+    updateSubtotal(input);
+  }
+}
+
+function updateSubtotal(input) {
+  let row = input.closest('tr');
+  let price = parseFloat(row.cells[1].textContent.replace('$', ''));
+  let quantity = parseInt(input.value);
+  let subtotal = price * quantity;
+  row.querySelector('.subtotal').textContent = '$' + subtotal.toFixed(2);
+  updateTotal();
+}
+
+function removeItem(button) {
+  let row = button.closest('tr');
+  row.remove();
+  updateTotal();
+}
+
+function updateTotal() {
+  let subtotals = document.querySelectorAll('.subtotal');
+  let total = 0;
+  subtotals.forEach(subtotal => {
+    total += parseFloat(subtotal.textContent.replace('$', ''));
+  });
+  document.getElementById('cart-total').textContent = '$' + total.toFixed(2);
+}
+
+function toggleDeliveryDetails() {
+  let deliveryDetails = document.getElementById('delivery-details');
+  let isHomeDelivery = document.querySelector('input[name="delivery"]:checked').value === 'home';
+  deliveryDetails.style.display = isHomeDelivery ? 'block' : 'none';
+}
+
+function getGPSLocation() {
+  if (navigator.geolocation) {
+    document.getElementById('gps-status').textContent = '🔍 Buscando tu ubicación...';
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        gpsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        document.getElementById('gps-status').textContent = '✅ ¡Ubicación encontrada!';
+        document.getElementById('gps-btn').textContent = '🗺️ Ver mi ubicación en el mapa';
+        document.getElementById('gps-btn').onclick = () => window.open(gpsLink, '_blank');
+      },
+      (error) => {
+        console.error("Error obteniendo la ubicación: ", error);
+        document.getElementById('gps-status').textContent = '❌ Ups, no pudimos obtener tu ubicación';
+        alert("No pudimos obtener tu ubicación GPS. Por favor, ingresa tu dirección manualmente. 😊");
+      }
+    );
+  } else {
+    alert("Tu navegador no soporta geolocalización. ¿Podrías ingresar tu dirección manualmente? ¡Gracias! 😊");
+  }
+}
+
+function enviarPedidoWhatsApp() {
+  let rows = document.querySelectorAll('.cart-table tbody tr');
+  let mensaje = "¡Hola RELIMPIO! 👋 Quiero hacer el siguiente pedido:\n\n";
+  let hayProductos = false;
+  
+  rows.forEach(row => {
+    let cantidad = parseInt(row.querySelector('.quantity-selector input').value);
+    if (cantidad > 0) {
+      hayProductos = true;
+      let producto = row.cells[0].textContent.trim();
+      let precio = row.cells[1].textContent;
+      let subtotal = row.querySelector('.subtotal').textContent;
+      
+      mensaje += `${producto} - ${cantidad} x ${precio} = ${subtotal}\n`;
+    }
+  });
+  
+  if (!hayProductos) {
+    alert("¡Ups! Parece que tu carrito está vacío. 🛒 ¿Qué tal si agregas algunos productos antes de hacer el pedido? 😊");
+    return;
+  }
+  
+  mensaje += `\n💰 Total: ${document.getElementById('cart-total').textContent}`;
+  
+  let isHomeDelivery = document.querySelector('input[name="delivery"]:checked').value === 'home';
+  mensaje += `\n\n🚚 Método de entrega: ${isHomeDelivery ? '🏠 Envío a domicilio' : '🏪 Retiro en tienda'}`;
+  
+  if (isHomeDelivery) {
+    let nombre = document.getElementById('nombre').value.trim();
+    let direccion = document.getElementById('direccion').value.trim();
+    
+    if (!nombre || !direccion) {
+      alert("¡Casi listo! Solo necesitamos tu nombre y dirección para el envío a domicilio. 📝");
+      return;
+    }
+    
+    mensaje += `\n\n👤 Nombre: ${nombre}`;
+    mensaje += `\n🏠 Dirección: ${direccion}`;
+    mensaje += `\n📅 Horario de entrega: Lunes y Martes de 8:30 a 12:30hs`;
+    
+    if (gpsLink) {
+      mensaje += `\n📍 Mi ubicación GPS: ${gpsLink}`;
+    }
+  }
+  
+  let encodedMessage = encodeURIComponent(mensaje);
+  window.open(`https://api.whatsapp.com/send?phone=+543625142139&text=${encodedMessage}`, '_blank');
+}
+
+// Inicializar el estado de los detalles de entrega
+toggleDeliveryDetails();
+
+// Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+</script>
+
+</body></html>
